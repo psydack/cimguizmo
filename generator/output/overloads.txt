@@ -1,0 +1,8 @@
+----------------overloadings---------------------------
+ImGuizmo_IsOver	2
+1	bool	ImGuizmo_IsOver_Nil ()
+2	bool	ImGuizmo_IsOver_OPERATION (OPERATION)
+ImGuizmo_ViewManipulate	2
+1	void	ImGuizmo_ViewManipulate_Float (float*,float,ImVec2,ImVec2,ImU32)
+2	void	ImGuizmo_ViewManipulate_FloatPtr (float*,const float*,OPERATION,MODE,float*,float,ImVec2,ImVec2,ImU32)
+4 overloaded
