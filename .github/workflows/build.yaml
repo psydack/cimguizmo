@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
     
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -35,10 +37,6 @@ jobs:
             echo "/C/vcpkg/installed/x64-windows/tools/luajit" >> $GITHUB_PATH
             echo "/C/vcpkg/installed/x64-windows/bin"   >> $GITHUB_PATH
           fi
-  
-      - name: Download Submodules
-        run: |
-          git submodule update --init --recursive
 
       - name: Download Latest CImGui
         shell: bash
@@ -48,7 +46,7 @@ jobs:
       - name: Generate Bindings
         shell: bash
         run: |
-          cd ./cimguizmo/generator
+          cd ./generator
           bash ./generator.sh
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
