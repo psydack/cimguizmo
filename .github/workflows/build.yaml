@@ -1,6 +1,6 @@
 name: CImGuizmo Build
 
-on: [push, pull_requests]
+on: [push]
 
 jobs:
   build:
