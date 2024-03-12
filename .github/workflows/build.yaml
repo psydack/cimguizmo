@@ -37,11 +37,6 @@ jobs:
             echo "/C/vcpkg/installed/x64-windows/tools/luajit" >> $GITHUB_PATH
             echo "/C/vcpkg/installed/x64-windows/bin"   >> $GITHUB_PATH
           fi
-
-      - name: Download Latest CImGui
-        shell: bash
-        run: |
-          git clone https://github.com/psydack/cimgui.git cimgui
   
       - name: Generate Bindings
         shell: bash
