@@ -2559,5 +2559,48 @@ parser:parse_struct_line(code,tab)
 M.prtable(tab)
 --]=]
 
+function M.GetScriptArgs(defines,...)
+	assert(_VERSION=='Lua 5.1',"Must use LuaJIT")
+	assert(bit,"Must use LuaJIT")
+	local script_args = {...}
+	local COMPILER = script_args[1]
+	local INTERNAL_GENERATION = (script_args[2] and script_args[2]:match("internal")) and true or false
+	local COMMENTS_GENERATION = (script_args[2] and script_args[2]:match("comments")) and true or false
+
+	local predefine = COMPILER == "cl" and "/D" or "-D"
+	local defines_str = ""
+	for i,define in ipairs(defines) do
+		defines_str = defines_str .. " "..predefine..define
+	end
+
+	local CPRE,CTEST
+	if COMPILER == "gcc" or COMPILER == "clang" or COMPILER == "g++" then
+		CPRE = COMPILER..[[ -E -dD -std=c++17 -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS -DIMGUI_API="" ]]..defines_str
+		CTEST = COMPILER.." --version"
+	elseif COMPILER == "cl" then
+		CPRE = COMPILER..[[ /E /d1PP /DIMGUI_DISABLE_OBSOLETE_FUNCTIONS /DIMGUI_API="" ]]..defines_str
+		CTEST = COMPILER
+	else
+		print("Working without compiler ")
+		error("cant work with "..COMPILER.." compiler")
+	end
+
+	local HAVE_COMPILER = false
+	local pipe,err = io.popen(CTEST,"r")
+	if pipe then
+		local str = pipe:read"*a"
+		print(str)
+		pipe:close()
+		HAVE_COMPILER = str ~= ""
+	else
+		print(err)
+	end
+	assert(HAVE_COMPILER,"gcc, clang or cl needed to run script")
+
+	print("HAVE_COMPILER",HAVE_COMPILER)
+	print("INTERNAL_GENERATION",INTERNAL_GENERATION)
+
+	return COMPILER, CPRE, INTERNAL_GENERATION, COMMENTS_GENERATION
+end
 
 return M
