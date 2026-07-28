@@ -1,8 +1,18 @@
 ----------------overloadings---------------------------
-ImGuizmo_IsOver	2
+ImGuizmo_GetID	3
+1	ImGuiID	ImGuizmo_GetID_Str (const char*)
+2	ImGuiID	ImGuizmo_GetID_StrStr (const char*,const char*)
+3	ImGuiID	ImGuizmo_GetID_Ptr (const void*)
+ImGuizmo_IsOver	3
 1	bool	ImGuizmo_IsOver_Nil ()
 2	bool	ImGuizmo_IsOver_OPERATION (OPERATION)
+3	bool	ImGuizmo_IsOver_FloatPtr (float*,float)
+ImGuizmo_PushID	4
+1	void	ImGuizmo_PushID_Str (const char*)
+2	void	ImGuizmo_PushID_StrStr (const char*,const char*)
+3	void	ImGuizmo_PushID_Ptr (const void*)
+4	void	ImGuizmo_PushID_Int (int)
 ImGuizmo_ViewManipulate	2
 1	void	ImGuizmo_ViewManipulate_Float (float*,float,ImVec2,ImVec2,ImU32)
 2	void	ImGuizmo_ViewManipulate_FloatPtr (float*,const float*,OPERATION,MODE,float*,float,ImVec2,ImVec2,ImU32)
-4 overloaded
+12 overloaded

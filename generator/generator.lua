@@ -46,7 +46,7 @@ local cimgui_header =
 -----------------------------do it----------------------
 --------------------------------------------------------
 --get implot.h version--------------------------
-local pipe,err = io.open("../ImGuizmo/ImGuizmo.h","r")
+local pipe,err = io.open("../ImGuizmo/src/ImGuizmo.h","r")
 if not pipe then
     error("could not open file:"..err)
 end
@@ -78,7 +78,8 @@ local function parseImGuiHeader(header,names,modulename)
 	parser.str_subst = {["%[%[[^%[%]]+%]%]"] = ""}
 	parser.COMMENTS_GENERATION = COMMENTS_GENERATION
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
-	local extra_includes = include_cmd.." ../../cimgui/imgui "
+	local language_flag = COMPILER=="cl" and [[ /TP ]] or [[ -x c++ ]]
+	local extra_includes = include_cmd.." ../../cimgui/imgui "..language_flag
 
 	parser:take_lines(CPRE..extra_includes..header, names, COMPILER)
 	
@@ -88,7 +89,7 @@ end
 print("------------------generation with "..COMPILER.."------------------------")
 local modulename = "cimguizmo"
 
-local headerst = [[#include "../ImGuizmo/ImGuizmo.h"
+local headerst = [[#include "../ImGuizmo/src/ImGuizmo.h"
 ]]
 --headerst = headerst .. [[#include "../ImGuizmo/GraphEditor.h"
 --]]
